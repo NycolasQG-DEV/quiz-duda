@@ -17,10 +17,13 @@ sock.on('connect',()=>me?sock.emit('join',{tok,...me}):show('#join'));
 sock.on('joined',()=>{const cur=$('.screen.on');if(cur&&cur.id!=='join')return;$('#me').src=me.photo;T($('#hi'),`Oi, ${me.name}!`);show('#wait');SFX.joined()});
 
 sock.on('question',d=>{
-  $('#qn').textContent=`Pergunta ${d.i+1} de ${d.total}`;T($('#qt'),d.text);$('#st').hidden=true;
+  $('#qn').textContent=`Pergunta ${d.i+1} de ${d.total}`;
+  $('#qt').textContent=d.text;
+  $('#st').hidden=true;
   const t=$('.tm i');t.style.animation='none';t.offsetWidth;t.style.animation=`tm ${d.time}s linear forwards`;
-  $('#opts').innerHTML=d.opts.map((o,i)=>`<button class="opt o${i}" style="--i:${i}" data-i="${i}"><b>${L[i]}</b>${esc(o)}</button>`).join('');show('#q');
-  SFX.go();if(!isMob){for(let i=0;i<4;i++)setTimeout(()=>SFX.optIn(i),420+i*120);}
+  $('#opts').innerHTML=d.opts.map((o,i)=>`<button class="opt o${i}" style="--i:${i}" data-i="${i}"><b>${L[i]}</b>${esc(o)}</button>`).join('');
+  show('#q');
+  SFX.go();
   let s=d.time;clearInterval(pt);pt=setInterval(()=>{s--;if(s>0&&s<=5&&!$('.opt.sel'))SFX.tick(s,true);if(s<=0)clearInterval(pt)},1000);
 });
 $('#opts').onclick=e=>{const b=e.target.closest('.opt');if(!b||$('.opt.sel'))return;

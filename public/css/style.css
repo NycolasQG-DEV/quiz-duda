@@ -154,40 +154,132 @@ button.opt:active{transform:scale(.96)}
 .rays{position:fixed;left:50%;top:48%;width:240vmax;height:240vmax;margin:-120vmax 0 0 -120vmax;z-index:1;opacity:0;transition:opacity 2.5s;pointer-events:none;background:repeating-conic-gradient(rgba(232,84,106,.25) 0 7deg,transparent 7deg 18deg);animation:spin 30s linear infinite;-webkit-mask:radial-gradient(circle,#000 4%,transparent 38%);mask:radial-gradient(circle,#000 4%,transparent 38%)}
 .winner .rays{opacity:1}
 
-/* Otimizações extremas para mobile: remove efeitos pesados que travam celulares */
-.mob .grain,
-@media(max-width:768px){.grain{display:none!important}}
-.mob .fc,
-.mob .sp,
-.mob .leak,
-@media(max-width:768px){.fc,.sp,.leak{display:none!important}}
-.mob .bg i,
-@media(max-width:768px){.bg i{animation:none!important;filter:blur(22px)!important}}
-.mob .glass,
-@media(max-width:768px){
-  .glass{backdrop-filter:none!important;-webkit-backdrop-filter:none!important;background:rgba(255,255,255,.94)!important;box-shadow:0 6px 18px rgba(168,23,28,.14)!important}
+/* Performance total para mobile e aplicativo de jogadores: ZERO animações que travam */
+.player-app .screen,
+.mob .screen {
+  animation: none !important;
+  filter: none !important;
+  transform: none !important;
 }
-.mob .grid,
-@media(max-width:768px){.grid{perspective:none!important}}
-.mob .opt,
-@media(max-width:768px){
-  .opt{animation:none!important;filter:none!important;transform:none!important;transition:transform .12s ease,opacity .2s ease!important}
-  .opt:hover{transform:none!important}
-  .opt.sel{transform:scale(1.02)!important}
+.player-app .screen.on,
+.mob .screen.on {
+  animation: none !important;
+  filter: none !important;
+  transform: none !important;
+  opacity: 1 !important;
 }
-.mob .w,
-@media(max-width:768px){
-  .w{display:inline!important;opacity:1!important;animation:none!important;filter:none!important;transform:none!important}
+.player-app .screen.out,
+.mob .screen.out {
+  display: none !important;
+  animation: none !important;
 }
-.mob .screen.on,
-@media(max-width:768px){
-  .screen.on{animation:fi-mob .2s ease-out both!important}
-  .screen.out{animation:fo-mob .12s ease-in both!important}
+.player-app .grid,
+.mob .grid {
+  perspective: none !important;
 }
-@keyframes fi-mob{from{opacity:0;transform:translateY(8px)}to{opacity:1;transform:none}}
-@keyframes fo-mob{to{opacity:0}}
-.mob .btn::after,
-@media(max-width:768px){.btn::after{display:none!important}}
+.player-app .opt,
+.mob .opt {
+  animation: none !important;
+  filter: none !important;
+  transform: none !important;
+  transition: opacity .15s ease, background .15s ease !important;
+}
+.player-app .opt:hover,
+.mob .opt:hover {
+  transform: none !important;
+  filter: none !important;
+}
+.player-app .opt b,
+.mob .opt b {
+  animation: none !important;
+  transform: none !important;
+}
+.player-app .w,
+.mob .w {
+  display: inline !important;
+  opacity: 1 !important;
+  animation: none !important;
+  filter: none !important;
+  transform: none !important;
+}
+.player-app .glass,
+.mob .glass {
+  backdrop-filter: none !important;
+  -webkit-backdrop-filter: none !important;
+  background: rgba(255, 255, 255, 0.95) !important;
+  box-shadow: 0 4px 16px rgba(168, 23, 28, 0.12) !important;
+}
+.player-app .grain, .player-app .fc, .player-app .sp, .player-app .leak, .player-app .cine,
+.mob .grain, .mob .fc, .mob .sp, .mob .leak, .mob .cine {
+  display: none !important;
+}
+.player-app .bg i,
+.mob .bg i {
+  animation: none !important;
+  filter: blur(15px) !important;
+}
+.player-app .btn::after,
+.mob .btn::after {
+  display: none !important;
+}
+
+@media(max-width:768px){
+  .screen {
+    animation: none !important;
+    filter: none !important;
+    transform: none !important;
+  }
+  .screen.on {
+    animation: none !important;
+    filter: none !important;
+    transform: none !important;
+    opacity: 1 !important;
+  }
+  .screen.out {
+    display: none !important;
+    animation: none !important;
+  }
+  .grid {
+    perspective: none !important;
+  }
+  .opt {
+    animation: none !important;
+    filter: none !important;
+    transform: none !important;
+    transition: opacity .15s ease, background .15s ease !important;
+  }
+  .opt:hover {
+    transform: none !important;
+    filter: none !important;
+  }
+  .opt b {
+    animation: none !important;
+    transform: none !important;
+  }
+  .w {
+    display: inline !important;
+    opacity: 1 !important;
+    animation: none !important;
+    filter: none !important;
+    transform: none !important;
+  }
+  .glass {
+    backdrop-filter: none !important;
+    -webkit-backdrop-filter: none !important;
+    background: rgba(255, 255, 255, 0.95) !important;
+    box-shadow: 0 4px 16px rgba(168, 23, 28, 0.12) !important;
+  }
+  .grain, .fc, .sp, .leak, .cine {
+    display: none !important;
+  }
+  .bg i {
+    animation: none !important;
+    filter: blur(15px) !important;
+  }
+  .btn::after {
+    display: none !important;
+  }
+}
 
 @media(max-width:700px){
   .grid{grid-template-columns:1fr}
