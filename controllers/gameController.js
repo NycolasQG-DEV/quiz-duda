@@ -7,7 +7,7 @@ module.exports=io=>{
     const q=game.q,ph=game.phase,last=game.i===Q.length-1;
     const btn=ph==='lobby'?'Iniciar quiz':ph==='question'?'Encerrar pergunta agora'
       :ph==='reveal'?(last?'Ir para o resultado final':'Próxima pergunta')
-      :ph==='finale'?['Revelar o 3º lugar','Revelar o 2º lugar','Revelar a vencedora',''][game.fin]:'';
+      :ph==='finale'?['Revelar o 3º lugar','Revelar o 2º lugar','Revelar o(a) vencedor(a)',''][game.fin]:'';
     io.to('admin').emit('state',{phase:ph,i:game.i,total:Q.length,count:game.players.size,answered:game.answered(),
       q:q?q.q:'',ans:q?q.o[q.a]:'',btn,cool:Math.max(0,cool-Date.now()),names:names()});
   };

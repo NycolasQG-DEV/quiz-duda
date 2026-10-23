@@ -108,9 +108,10 @@ sock.on('reveal',d=>{
 sock.on('count',onCount);
 
 sock.on('finale',()=>{
-  const f=$('#fin');document.body.classList.add('dark');f.classList.remove('winner','susp');$('#ft').textContent='';
+  const f=$('#fin');document.body.classList.add('dark');f.classList.remove('winner','susp');f.classList.add('open');
+  T($('#ft'),'Grande Final!');
   [1,2,3].forEach(n=>{const s=slot('#fpod',n);s.className=`slot s${n} hid`;s.querySelector('.who').innerHTML='';s.querySelector('.bar').style.height=H[n]+'px'});
-  f.classList.add('open');show('#fin');setTimeout(()=>f.classList.remove('open'),800);SFX.scene('finale');
+  show('#fin');SFX.scene('finale');
 });
 
 sock.on('fstep',d=>{
@@ -124,12 +125,12 @@ sock.on('fstep',d=>{
       s.classList.remove('hid');s.classList.add('lit');fill(s,d.top[n-1],H[n]);T($('#ft'),`${n}º lugar`);
       SFX.place(n);flash('rgba(248,180,190,.85)');const[x,y]=mid(s.querySelector('.bar'));spray(x,y-60,22,{spread:260});
     }else{
-      // 1º lugar e Grande Vencedora direto: pódio continua 100% visível na tela
+      // 1º lugar e Grande Vencedor(a) direto: pódio continua 100% visível na tela
       const s=slot('#fpod',1);
       $$('#fpod .slot').forEach(x=>x.classList.remove('lit','gone'));
       s.classList.remove('hid');s.classList.add('lit','win');fill(s,d.top[0],H[1]);
       s.querySelector('.who').insertAdjacentHTML('afterbegin',`<span class="crown">${SVG_CROWN}</span>`);
-      f.classList.add('winner');T($('#ft'),`${d.top[0].name} é a grande vencedora!`);confetti();
+      f.classList.add('winner');T($('#ft'),`${d.top[0].name} é o(a) grande vencedor(a)!`);confetti();
       SFX.winner();SFX.scene('win');flash('rgba(232,84,106,.95)');
       const[x,y]=mid(s.querySelector('.bar'));spray(x,y-60,30,{spread:320});
     }
