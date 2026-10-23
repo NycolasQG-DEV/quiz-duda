@@ -117,16 +117,21 @@ sock.on('fstep',d=>{
   const f=$('#fin');f.classList.add('susp');T($('#ft'),'Rufem os tambores...');
   const wait=d.step===1?3500:2800;SFX.drumroll(wait/1000);
   setTimeout(()=>{
-    f.classList.remove('susp');$$('#fpod .slot').forEach(s=>s.classList.remove('lit'));
-    if(d.step<4){
-      const n=[0,3,2,1][d.step],s=slot('#fpod',n);if(d.step===1){f.classList.add('open');SFX.curtain()}
+    f.classList.remove('susp');
+    if(d.step<3){
+      const n=[0,3,2][d.step],s=slot('#fpod',n);if(d.step===1){f.classList.add('open');SFX.curtain()}
+      $$('#fpod .slot').forEach(x=>x.classList.remove('lit'));
       s.classList.remove('hid');s.classList.add('lit');fill(s,d.top[n-1],H[n]);T($('#ft'),`${n}º lugar`);
       SFX.place(n);flash('rgba(248,180,190,.85)');const[x,y]=mid(s.querySelector('.bar'));spray(x,y-60,22,{spread:260});
     }else{
-      slot('#fpod',2).classList.add('gone');slot('#fpod',3).classList.add('gone');
-      const w=slot('#fpod',1);w.classList.add('win','lit');w.querySelector('.who').insertAdjacentHTML('afterbegin',`<span class="crown">${SVG_CROWN}</span>`);
+      // 1º lugar e Grande Vencedora direto: pódio continua 100% visível na tela
+      const s=slot('#fpod',1);
+      $$('#fpod .slot').forEach(x=>x.classList.remove('lit','gone'));
+      s.classList.remove('hid');s.classList.add('lit','win');fill(s,d.top[0],H[1]);
+      s.querySelector('.who').insertAdjacentHTML('afterbegin',`<span class="crown">${SVG_CROWN}</span>`);
       f.classList.add('winner');T($('#ft'),`${d.top[0].name} é a grande vencedora!`);confetti();
       SFX.winner();SFX.scene('win');flash('rgba(232,84,106,.95)');
+      const[x,y]=mid(s.querySelector('.bar'));spray(x,y-60,30,{spread:320});
     }
   },wait);
 });

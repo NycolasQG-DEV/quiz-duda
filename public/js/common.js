@@ -1,6 +1,8 @@
 const $=s=>document.querySelector(s),$$=s=>[...document.querySelectorAll(s)];
 const esc=s=>String(s).replace(/[&<>"']/g,c=>'&#'+c.charCodeAt(0)+';');
 const rnd=(a,b)=>a+Math.random()*(b-a);
+const isMob=window.matchMedia('(max-width:768px)').matches||/Android|iPhone|iPad|iPod|Mobile/i.test(navigator.userAgent)||('ontouchstart' in window&&window.innerWidth<=1024);
+if(isMob)document.documentElement.classList.add('mob');
 
 /* ---------- cerejas da logo (SVG): par, rosa e vermelha ---------- */
 const CH={
@@ -14,6 +16,11 @@ const cherry=(k='pair')=>CH[k];
 let _t;
 function show(id){
   clearTimeout(_t);const nx=$(id),old=$$('.screen.on').filter(e=>e!==nx);
+  if(isMob){
+    old.forEach(e=>e.classList.remove('on','out'));
+    nx.classList.add('on');
+    return;
+  }
   old.forEach(e=>e.classList.add('out'));
   if(old.length&&window.SFX)SFX.whoosh();
   _t=setTimeout(()=>{$$('.screen').forEach(e=>e!==nx&&e.classList.remove('on','out'));nx.classList.add('on')},old.length?350:0);
@@ -21,7 +28,7 @@ function show(id){
 
 /* ---------- efeito máquina de escrever suave ---------- */
 function T(el,text){
-  // fallback rápido para perguntas/opções (não são data-tw)
+  if(isMob){el.textContent=text;return}
   el.innerHTML=String(text).split(/\s+/).filter(Boolean).map((w,i)=>`<span class="w" style="--k:${i}">${esc(w)}</span>`).join(' ');
 }
 
@@ -67,6 +74,7 @@ function scoreUp(el,from,to,o={}){
 /* ---------- partículas ---------- */
 const mid=el=>{const r=el.getBoundingClientRect();return[r.left+r.width/2,r.top+r.height/2,r]};
 function spray(x,y,n=16,o={}){
+  if(isMob)return;
   const{spread=240,up=1,cherries=.4}=o;
   for(let i=0;i<n;i++){
     const s=document.createElement('span'),isC=Math.random()<cherries,sz=isC?rnd(16,28):rnd(12,26);
@@ -117,16 +125,20 @@ function onCount(n){
 
 /* ---------- atmosfera: fundo, cerejas, vinheta, grão ---------- */
 document.body.insertAdjacentHTML('afterbegin','<div class="bg"><i></i><i></i><i></i></div>');
-for(let i=0;i<18;i++){const s=document.createElement('span');s.className='sp';s.textContent='✦';
-  s.style.cssText=`left:${Math.random()*100}vw;top:${Math.random()*100}vh;font-size:${10+Math.random()*22}px;animation-delay:${-Math.random()*4}s;animation-duration:${2.5+Math.random()*3}s`;document.body.appendChild(s)}
-// 3 camadas de profundidade: longe (pequenas), meio, perto (grandes e desfocadas)
-[['far',6,26,44,20,30],['mid',6,50,76,14,22],['near',3,120,170,9,14]].forEach(([cls,n,a,b,d1,d2])=>{
-  for(let i=0;i<n;i++){const c=document.createElement('span'),k=Math.random();
-    c.className='fc '+cls;c.innerHTML=cherry(k<.6?'pair':k<.8?'pink':'red');
-    c.style.cssText=`left:${rnd(0,96)}vw;width:${rnd(a,b)}px;animation-duration:${rnd(d1,d2)}s;animation-delay:${-rnd(0,d2)}s`;
-    c.firstChild.style.animationDuration=rnd(3,6)+'s';c.firstChild.style.animationDelay=-rnd(0,5)+'s';document.body.appendChild(c)}
-});
-document.body.insertAdjacentHTML('beforeend','<div class="leak"></div><div class="cine"></div><div class="grain"></div><div id="flash"></div>');
+if(!isMob){
+  for(let i=0;i<18;i++){const s=document.createElement('span');s.className='sp';s.textContent='✦';
+    s.style.cssText=`left:${Math.random()*100}vw;top:${Math.random()*100}vh;font-size:${10+Math.random()*22}px;animation-delay:${-Math.random()*4}s;animation-duration:${2.5+Math.random()*3}s`;document.body.appendChild(s)}
+  // 3 camadas de profundidade: longe (pequenas), meio, perto (grandes e desfocadas)
+  [['far',6,26,44,20,30],['mid',6,50,76,14,22],['near',3,120,170,9,14]].forEach(([cls,n,a,b,d1,d2])=>{
+    for(let i=0;i<n;i++){const c=document.createElement('span'),k=Math.random();
+      c.className='fc '+cls;c.innerHTML=cherry(k<.6?'pair':k<.8?'pink':'red');
+      c.style.cssText=`left:${rnd(0,96)}vw;width:${rnd(a,b)}px;animation-duration:${rnd(d1,d2)}s;animation-delay:${-rnd(0,d2)}s`;
+      c.firstChild.style.animationDuration=rnd(3,6)+'s';c.firstChild.style.animationDelay=-rnd(0,5)+'s';document.body.appendChild(c)}
+  });
+  document.body.insertAdjacentHTML('beforeend','<div class="leak"></div><div class="cine"></div><div class="grain"></div><div id="flash"></div>');
+}else{
+  document.body.insertAdjacentHTML('beforeend','<div id="flash"></div>');
+}
 
 // brilho que segue o cursor nos botões
 document.addEventListener('pointermove',e=>{const b=e.target.closest&&e.target.closest('.btn,button.opt');if(b){const r=b.getBoundingClientRect();b.style.setProperty('--mx',e.clientX-r.left+'px');b.style.setProperty('--my',e.clientY-r.top+'px')}});

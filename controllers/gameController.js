@@ -7,7 +7,7 @@ module.exports=io=>{
     const q=game.q,ph=game.phase,last=game.i===Q.length-1;
     const btn=ph==='lobby'?'Iniciar quiz':ph==='question'?'Encerrar pergunta agora'
       :ph==='reveal'?(last?'Ir para o resultado final':'Próxima pergunta')
-      :ph==='finale'?['Revelar o 3º lugar','Revelar o 2º lugar','Revelar o 1º lugar','Coroar a vencedora',''][game.fin]:'';
+      :ph==='finale'?['Revelar o 3º lugar','Revelar o 2º lugar','Revelar a vencedora',''][game.fin]:'';
     io.to('admin').emit('state',{phase:ph,i:game.i,total:Q.length,count:game.players.size,answered:game.answered(),
       q:q?q.q:'',ans:q?q.o[q.a]:'',btn,cool:Math.max(0,cool-Date.now()),names:names()});
   };
@@ -42,10 +42,10 @@ module.exports=io=>{
         if(ph==='lobby'){if(game.players.size)startQ(0)}
         else if(ph==='question')reveal();
         else if(ph==='reveal')game.i===Q.length-1?finale():countdown();
-        else if(ph==='finale'&&game.fin<4&&Date.now()>=cool){
-          game.fin++;cool=Date.now()+(game.fin===1?4300:3500);const r=game.ranking();
+        else if(ph==='finale'&&game.fin<3&&Date.now()>=cool){
+          game.fin++;cool=Date.now()+(game.fin===1?4300:3600);const r=game.ranking();
           io.to('screen').emit('fstep',{step:game.fin,top:r.slice(0,3).map(pub)});
-          if(game.fin===4)r.forEach((p,k)=>io.to(p.sid).emit('final',{rank:k+1,score:p.score}));
+          if(game.fin===3)r.forEach((p,k)=>io.to(p.sid).emit('final',{rank:k+1,score:p.score}));
           state();
         }
       });

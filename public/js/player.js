@@ -20,12 +20,12 @@ sock.on('question',d=>{
   $('#qn').textContent=`Pergunta ${d.i+1} de ${d.total}`;T($('#qt'),d.text);$('#st').hidden=true;
   const t=$('.tm i');t.style.animation='none';t.offsetWidth;t.style.animation=`tm ${d.time}s linear forwards`;
   $('#opts').innerHTML=d.opts.map((o,i)=>`<button class="opt o${i}" style="--i:${i}" data-i="${i}"><b>${L[i]}</b>${esc(o)}</button>`).join('');show('#q');
-  SFX.go();for(let i=0;i<4;i++)setTimeout(()=>SFX.optIn(i),420+i*120);
+  SFX.go();if(!isMob){for(let i=0;i<4;i++)setTimeout(()=>SFX.optIn(i),420+i*120);}
   let s=d.time;clearInterval(pt);pt=setInterval(()=>{s--;if(s>0&&s<=5&&!$('.opt.sel'))SFX.tick(s,true);if(s<=0)clearInterval(pt)},1000);
 });
 $('#opts').onclick=e=>{const b=e.target.closest('.opt');if(!b||$('.opt.sel'))return;
   b.classList.add('sel');$$('#opts .opt').forEach(x=>x!==b&&x.classList.add('dim'));SFX.select();
-  const[x,y]=mid(b);spray(x,y,8,{spread:110,cherries:.3});
+  if(!isMob){const[x,y]=mid(b);spray(x,y,8,{spread:110,cherries:.3});}
   $('#st').textContent='Resposta enviada! Aguarde...';$('#st').hidden=false;sock.emit('answer',+b.dataset.i)};
 
 sock.on('me',d=>{

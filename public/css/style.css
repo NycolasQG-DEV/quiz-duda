@@ -131,10 +131,11 @@ button.opt:active{transform:scale(.96)}
 .slot.gained .who em{box-shadow:0 0 24px var(--rose),0 0 0 2px var(--rose)}
 .slot.hid .bar{filter:brightness(.18)}.slot.hid .who{opacity:0}.slot.lit .bar{box-shadow:0 0 90px 24px rgba(248,180,190,.8)}
 .slot.lit::before{content:'';position:absolute;bottom:0;left:50%;margin-left:-160px;width:320px;height:640px;z-index:-1;background:linear-gradient(rgba(255,210,225,.75),transparent);clip-path:polygon(42% 0,58% 0,100% 100%,0 100%);animation:fi 1s both}
-.slot.gone{opacity:0;transform:translateY(320px) rotate(8deg);width:0;overflow:hidden;transition:all 1.6s ease-in}
-.slot.win{transform:scale(1.4);transform-origin:bottom center;transition:transform 1.8s cubic-bezier(.3,1.4,.5,1);margin:0 clamp(30px,5vw,70px)}
-.slot.win .av{width:clamp(90px,12vw,120px);height:clamp(90px,12vw,120px);animation:jump 1s infinite}
-@keyframes jump{0%,100%{transform:translateY(0) scale(1.2,.8)}25%{transform:translateY(-80px) scale(.85,1.25) rotate(-10deg)}50%{transform:translateY(0) scale(1.2,.8)}75%{transform:translateY(-80px) scale(.85,1.25) rotate(10deg)}}
+.slot.gone{display:none}
+.slot.win{transform:scale(1.08);transform-origin:bottom center;transition:transform 1s cubic-bezier(.3,1.4,.5,1);z-index:5;margin:0 4px}
+.slot.win .bar{box-shadow:0 0 60px 18px rgba(255,180,200,.9),0 0 90px 24px var(--rose),inset 0 3px 0 #fff}
+.slot.win .av{width:clamp(74px,10vw,104px);height:clamp(74px,10vw,104px);animation:jump 1s infinite}
+@keyframes jump{0%,100%{transform:translateY(0) scale(1.15,.85)}25%{transform:translateY(-50px) scale(.9,1.15) rotate(-6deg)}50%{transform:translateY(0) scale(1.15,.85)}75%{transform:translateY(-50px) scale(.9,1.15) rotate(6deg)}}
 /* coroa SVG */
 .crown{display:inline-block;width:clamp(2rem,5vw,3.4rem);animation:crown 1.3s cubic-bezier(.3,1.6,.5,1) both;filter:drop-shadow(0 0 12px rgba(212,160,23,.8))}
 .crown svg{width:100%;height:auto;display:block}
@@ -148,12 +149,49 @@ button.opt:active{transform:scale(.96)}
 #fin.susp .beam{animation-duration:.7s}#fin.susp:not(.open) .cur{animation:shk .1s infinite}@keyframes shk{50%{margin-left:5px}}
 #fin.susp::after{content:'';position:fixed;inset:0;box-shadow:inset 0 0 200px 80px #000;animation:pl .6s infinite;pointer-events:none;z-index:45}
 #fin h1,#fin .pod{position:relative;z-index:2}
+#fin{overflow:hidden}
+#fin .pod{height:min(48vh,400px);margin:0 auto;width:auto;max-width:96vw;justify-content:center;align-items:flex-end}
 .rays{position:fixed;left:50%;top:48%;width:240vmax;height:240vmax;margin:-120vmax 0 0 -120vmax;z-index:1;opacity:0;transition:opacity 2.5s;pointer-events:none;background:repeating-conic-gradient(rgba(232,84,106,.25) 0 7deg,transparent 7deg 18deg);animation:spin 30s linear infinite;-webkit-mask:radial-gradient(circle,#000 4%,transparent 38%);mask:radial-gradient(circle,#000 4%,transparent 38%)}
 .winner .rays{opacity:1}
+
+/* Otimizações extremas para mobile: remove efeitos pesados que travam celulares */
+.mob .grain,
+@media(max-width:768px){.grain{display:none!important}}
+.mob .fc,
+.mob .sp,
+.mob .leak,
+@media(max-width:768px){.fc,.sp,.leak{display:none!important}}
+.mob .bg i,
+@media(max-width:768px){.bg i{animation:none!important;filter:blur(22px)!important}}
+.mob .glass,
+@media(max-width:768px){
+  .glass{backdrop-filter:none!important;-webkit-backdrop-filter:none!important;background:rgba(255,255,255,.94)!important;box-shadow:0 6px 18px rgba(168,23,28,.14)!important}
+}
+.mob .grid,
+@media(max-width:768px){.grid{perspective:none!important}}
+.mob .opt,
+@media(max-width:768px){
+  .opt{animation:none!important;filter:none!important;transform:none!important;transition:transform .12s ease,opacity .2s ease!important}
+  .opt:hover{transform:none!important}
+  .opt.sel{transform:scale(1.02)!important}
+}
+.mob .w,
+@media(max-width:768px){
+  .w{display:inline!important;opacity:1!important;animation:none!important;filter:none!important;transform:none!important}
+}
+.mob .screen.on,
+@media(max-width:768px){
+  .screen.on{animation:fi-mob .2s ease-out both!important}
+  .screen.out{animation:fo-mob .12s ease-in both!important}
+}
+@keyframes fi-mob{from{opacity:0;transform:translateY(8px)}to{opacity:1;transform:none}}
+@keyframes fo-mob{to{opacity:0}}
+.mob .btn::after,
+@media(max-width:768px){.btn::after{display:none!important}}
+
 @media(max-width:700px){
   .grid{grid-template-columns:1fr}
   .pod{gap:8px}
-  .slot.win{margin:0 20px}
   .who b{font-size:.9rem}
   .ppl{max-height:30vh}
   .cnt{padding:10px 24px}
@@ -166,7 +204,6 @@ button.opt:active{transform:scale(.96)}
   .num{font-size:clamp(5rem,20vw,8rem)}
   .pod{height:min(42vh,300px)}
   .bar{font-size:1.8rem}
-  .slot.win{transform:scale(1.2);margin:0 10px}
   .valance{height:44px}
   .slot.lit::before{width:200px;margin-left:-100px}
 }
