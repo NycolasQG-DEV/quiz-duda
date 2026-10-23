@@ -1,0 +1,4 @@
+<!doctype html><html lang="pt-BR"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;700;900&family=Playfair+Display:ital,wght@0,700;0,900;1,600&display=swap" rel="stylesheet"><link rel="stylesheet" href="/css/style.css"><title>Controle do Quiz</title></head><body>
+<section class="screen on"><img class="logo" src="/img/logo.png"><h1>Painel de controle</h1>
+<form class="glass ctl" method="post" action="/admin/login"><input type="password" name="password" placeholder="Senha" autofocus><button class="btn">Entrar</button><p id="e" hidden>Senha incorreta. Tente de novo.</p></form></section>
+<script>if(location.search.includes('erro'))document.getElementById('e').hidden=false</script><canvas id="cf"></canvas><script src="/js/common.js"></script></body></html>

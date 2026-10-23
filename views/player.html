@@ -1,0 +1,10 @@
+<!doctype html><html lang="pt-BR"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;700;900&family=Playfair+Display:ital,wght@0,700;0,900;1,600&display=swap" rel="stylesheet"><link rel="stylesheet" href="/css/style.css"><title>Quiz da Duda</title></head><body data-music="0">
+<section class="screen" id="join"><img class="logo" src="/img/logo.png"><h1 data-cine>Quiz de 16 anos</h1><p class="sub">Quanto você conhece a Maria Eduarda?</p>
+<input id="name" maxlength="20" placeholder="Seu nome"><div class="camw"><video id="vid" class="cam" autoplay playsinline muted></video><img id="prev" class="cam" hidden></div>
+<input id="file" type="file" accept="image/*" capture="user" hidden><button class="btn" id="snap">Tirar foto</button><button class="btn" id="ok" disabled>Entrar no quiz</button></section>
+<section class="screen" id="wait"><div class="halo"><img id="me" class="av big"></div><h1 id="hi"></h1><p class="pill">Aguardando o quiz começar…</p></section>
+<section class="screen" id="q"><span class="pill" id="qn"></span><div class="tm"><i></i></div><h2 class="glass qt" id="qt"></h2><div class="grid" id="opts"></div><p class="pill" id="st" hidden></p></section>
+<section class="screen" id="res"><div class="emoji" id="re"></div><h1 id="rt"></h1><div class="glass pts"><b id="rp"></b><small id="rs"></small></div><p class="glass msg" id="rm"></p></section>
+<section class="screen" id="cd"><div class="burst"><h1 id="n" class="num"></h1></div></section>
+<section class="screen" id="info"><div class="halo"><img id="me2" class="av big"></div><h1 id="it"></h1></section>
+<canvas id="cf"></canvas><script src="/socket.io/socket.io.js"></script><script src="/js/common.js"></script><script src="/js/audio.js"></script><script src="/js/player.js"></script></body></html>

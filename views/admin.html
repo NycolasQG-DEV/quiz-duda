@@ -1,0 +1,8 @@
+<!doctype html><html lang="pt-BR"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;700;900&family=Playfair+Display:ital,wght@0,700;0,900;1,600&display=swap" rel="stylesheet"><link rel="stylesheet" href="/css/style.css"><title>Controle do Quiz</title></head><body data-music="0">
+<section class="screen on"><img class="logo" src="/img/logo.png" style="width:150px"><h1>Painel de controle</h1>
+<div class="glass ctl"><p class="sub" id="ph">Sala de espera</p><h2 id="qinfo"></h2><p id="key" hidden><svg viewBox="0 0 16 16" fill="none" width="15" height="15" style="vertical-align:-2px;margin-right:5px"><circle cx="8" cy="8" r="7" fill="#1b8a43"/><path d="M4.8 8.2l2.2 2.2 4.4-4.6" stroke="#fff" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>Resposta certa: <b></b></p>
+<div class="stats"><div><b id="c1">0</b><small>conectados</small></div><div><b id="c2">0</b><small>responderam</small></div><div><b id="c3">–</b><small>pergunta</small></div></div>
+<button class="btn big" id="go" disabled>Aguarde…</button>
+<div class="row"><a class="btn sm ghost" href="/tela" target="_blank">Abrir telão</a><button class="btn sm ghost" id="rs">Reiniciar tudo</button></div></div>
+<div id="ppl" class="ppl"></div></section>
+<canvas id="cf"></canvas><script src="/socket.io/socket.io.js"></script><script src="/js/common.js"></script><script src="/js/audio.js"></script><script src="/js/admin.js"></script></body></html>
